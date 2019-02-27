@@ -1,3 +1,5 @@
+package easy;
+
 public class ReverseInteger {
 
     private static int reverse(int x) {
