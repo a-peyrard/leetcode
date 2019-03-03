@@ -1,5 +1,7 @@
 package easy;
 
+import util.TestRunner;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -104,37 +106,42 @@ public class UniqueEmailAddresses {
         return uniques.size();
     }
 
-    static class Test {
-        String[] input;
-        int output;
+    static class Test implements TestRunner.RunnableTest<Integer> {
+        private final String[] input;
+        private final int output;
 
         Test(String[] input, int output) {
             this.input = input;
             this.output = output;
         }
+
+        @Override
+        public Integer run() {
+            return numUniqueEmails(input);
+        }
+
+        @Override
+        public String inputs() {
+            return Arrays.toString(input);
+        }
+
+        @Override
+        public Integer expect() {
+            return output;
+        }
     }
 
     public static void main(String[] args) {
-        Test[] tests = {
-                new Test(new String[]{"test.email+alex@leetcode.com", "test.e.mail+bob.cathy@leetcode.com", "testemail+david@lee.tcode.com"}, 2),
-                new Test(new String[]{"test.email@leetcode.coma", "test.email@leetcode.comb"}, 2),
-                new Test(new String[]{"test.email@leetcode.com", "test.email@leetcode.comb"}, 2),
-                new Test(new String[]{"test.email@leetcode.coma", "test.email@leetcode.com"}, 2),
-                new Test(new String[]{"augustin@leetcode.com", "augustin@leetcode.com"}, 1),
-                new Test(new String[]{"augustin@leetcode.com", "augustin@leet.com"}, 2),
-                new Test(new String[]{"augustin@e.com", "augustin@leet.com"}, 2),
-                new Test(new String[]{"augustin@e.com", "a@t.com"}, 2),
-        };
-
-        for (Test test : tests) {
-            int res = numUniqueEmails(test.input);
-            System.out.printf(
-                    "%s for (%s) = %s expected %s\n",
-                    test.output == res ? "\uD83C\uDF89" : "\uD83D\uDC80",
-                    Arrays.toString(test.input),
-                    res,
-                    test.output
-            );
-        }
+        TestRunner.basic()
+                  .run(
+                          new Test(new String[]{"test.email+alex@leetcode.com", "test.e.mail+bob.cathy@leetcode.com", "testemail+david@lee.tcode.com"}, 2),
+                          new Test(new String[]{"test.email@leetcode.coma", "test.email@leetcode.comb"}, 2),
+                          new Test(new String[]{"test.email@leetcode.com", "test.email@leetcode.comb"}, 2),
+                          new Test(new String[]{"test.email@leetcode.coma", "test.email@leetcode.com"}, 2),
+                          new Test(new String[]{"augustin@leetcode.com", "augustin@leetcode.com"}, 1),
+                          new Test(new String[]{"augustin@leetcode.com", "augustin@leet.com"}, 2),
+                          new Test(new String[]{"augustin@e.com", "augustin@leet.com"}, 2),
+                          new Test(new String[]{"augustin@e.com", "a@t.com"}, 2)
+                  );
     }
 }

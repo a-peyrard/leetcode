@@ -17,10 +17,12 @@ package easy;/*
 
  */
 
+import util.TestRunner;
+
 import java.util.Arrays;
 
 public class NonDecreasingArray {
-    public static boolean checkPossibility(int[] nums) {
+    private static boolean checkPossibility(int[] nums) {
         int errors = 0;
         for (int i = 0; i < nums.length - 1; i++) {
             if (nums[i] > nums[i + 1]) {
@@ -46,37 +48,42 @@ public class NonDecreasingArray {
         return true;
     }
 
-    static class Test {
-        int[] input;
-        boolean output;
+    static class Test implements TestRunner.RunnableTest<Boolean> {
+        private final int[] input;
+        private final boolean output;
 
         Test(int[] input, boolean output) {
             this.input = input;
             this.output = output;
         }
+
+        @Override
+        public Boolean run() {
+            return checkPossibility(input);
+        }
+
+        @Override
+        public String inputs() {
+            return Arrays.toString(input);
+        }
+
+        @Override
+        public Boolean expect() {
+            return output;
+        }
     }
 
     public static void main(String[] args) {
-        Test[] tests = {
-                new Test(new int[]{3, 4, 2, 3}, false),
-                new Test(new int[]{11, 2, 3, 4}, true),
-                new Test(new int[]{1, 11, 3, 4}, true),
-                new Test(new int[]{1, 2, 3, 4}, true),
-                new Test(new int[]{4, 3, 1, 4}, false),
-                new Test(new int[]{1, 2, 3, 1}, true),
-                new Test(new int[]{1, 2, 3, 1, 5}, true),
-                new Test(new int[]{5, 2, 3, 1}, false),
-        };
-
-        for (Test test : tests) {
-            boolean res = checkPossibility(test.input);
-            System.out.printf(
-                    "%s for (%s) = %s expected %s\n",
-                    test.output == res ? "\uD83C\uDF89" : "\uD83D\uDC80",
-                    Arrays.toString(test.input),
-                    res,
-                    test.output
-            );
-        }
+        TestRunner.basic()
+                  .run(
+                          new Test(new int[]{3, 4, 2, 3}, false),
+                          new Test(new int[]{11, 2, 3, 4}, true),
+                          new Test(new int[]{1, 11, 3, 4}, true),
+                          new Test(new int[]{1, 2, 3, 4}, true),
+                          new Test(new int[]{4, 3, 1, 4}, false),
+                          new Test(new int[]{1, 2, 3, 1}, true),
+                          new Test(new int[]{1, 2, 3, 1, 5}, true),
+                          new Test(new int[]{5, 2, 3, 1}, false)
+                  );
     }
 }

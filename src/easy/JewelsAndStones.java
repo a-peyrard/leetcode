@@ -19,11 +19,13 @@ package easy;/*
     The characters in J are distinct.
  */
 
+import util.TestRunner;
+
 public class JewelsAndStones {
 
-    public static final int BASE_INDEX = (int) 'A'; // 65
+    private static final int BASE_INDEX = (int) 'A'; // 65
 
-    public static int numJewelsInStones(String J, String S) {
+    private static int numJewelsInStones(String J, String S) {
         long jewels = 0;
         for (char c : J.toCharArray()) {
             int index = index(c);
@@ -39,39 +41,44 @@ public class JewelsAndStones {
         return count;
     }
 
-    public static int index(char c) {
+    private static int index(char c) {
         return c - BASE_INDEX;
     }
 
-    public static class Test {
-        String jewels;
-        String stones;
-        int expected;
+    public static class Test implements TestRunner.RunnableTest<Integer> {
+        private final String jewels;
+        private final String stones;
+        private final int expected;
 
-        public Test(String jewels, String stones, int expected) {
+
+        Test(String jewels, String stones, int expected) {
             this.jewels = jewels;
             this.stones = stones;
             this.expected = expected;
         }
+
+        @Override
+        public Integer run() {
+            return numJewelsInStones(jewels, stones);
+        }
+
+        @Override
+        public String inputs() {
+            return String.format("%s/%s", jewels, stones);
+        }
+
+        @Override
+        public Integer expect() {
+            return expected;
+        }
     }
 
     public static void main(String[] args) {
-        Test[] tests = {
-                new Test("aB", "abcdefabcdef", 2),
-                new Test("abc", "abcdefabcdef", 6),
-                new Test("abc", "zyWdEF", 0),
-        };
-
-        for (Test test : tests) {
-            int nb = numJewelsInStones(test.jewels, test.stones);
-            System.out.printf(
-                    "%s nb for (%s/%s) = %d expected %d\n",
-                    test.expected == nb ? "\uD83C\uDF89" : "\uD83D\uDC80",
-                    test.jewels,
-                    test.stones,
-                    nb,
-                    test.expected
-            );
-        }
+        TestRunner.basic()
+                  .run(
+                          new Test("aB", "abcdefabcdef", 2),
+                          new Test("abc", "abcdefabcdef", 6),
+                          new Test("abc", "zyWdEF", 0)
+                  );
     }
 }

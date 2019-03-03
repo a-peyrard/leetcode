@@ -1,16 +1,13 @@
 package easy;
 
+import util.TestRunner;
+
 public class ReverseInteger {
 
     private static int reverse(int x) {
         if (x == Integer.MIN_VALUE) {
             return 0; // shortcut as Math.abs will fail on this :/
         }
-
-        // 1234
-        // 4 * 1000
-        // 3 * 100
-        // 2 * 10
 
         int unsignedX = Math.abs(x);
         if (unsignedX < 10) {
@@ -43,25 +40,45 @@ public class ReverseInteger {
         return sign * result;
     }
 
-    public static void main(String[] args) {
-        System.out.println("Integer.MIN_VALUE = " + Integer.MIN_VALUE);
-        System.out.println("Integer.MAX_VALUE = " + Integer.MAX_VALUE);
+    static class Test implements TestRunner.RunnableTest<Integer> {
+        private final int input;
+        private final int expected;
 
 
-        int[] tests = {
-                1563847412,
-//                -2147483648,
-//                Integer.MAX_VALUE,
-//                1534236469,
-//                100,
-//                123,
-//                -120,
-//                12,
-//                -7
-        };
-
-        for (int test : tests) {
-            System.out.printf(" => reverse %d = %d\n", test, reverse(test));
+        Test(int input, int expected) {
+            this.input = input;
+            this.expected = expected;
         }
+
+        @Override
+        public Integer run() {
+            return reverse(input);
+        }
+
+        @Override
+        public String inputs() {
+            return Integer.toString(input);
+        }
+
+        @Override
+        public Integer expect() {
+            return expected;
+        }
+    }
+
+
+    public static void main(String[] args) {
+        TestRunner.basic()
+                  .run(
+                          new Test(1563847412, 0),
+                          new Test(-2147483648, 0),
+                          new Test(Integer.MAX_VALUE, 0),
+                          new Test(1534236469, 0),
+                          new Test(100, 1),
+                          new Test(123, 321),
+                          new Test(-120, -21),
+                          new Test(12, 21),
+                          new Test(-7, -7)
+                  );
     }
 }
