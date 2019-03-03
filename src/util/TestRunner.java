@@ -1,7 +1,5 @@
 package util;
 
-import java.util.List;
-
 public class TestRunner {
     public static TestRunner basic() {
         return new TestRunner();
@@ -15,12 +13,12 @@ public class TestRunner {
     }
 
     public <O> void run(RunnableTest<O>... tests) {
-        boolean success = true;
+        int nbSuccess = 0;
         for (RunnableTest<O> test : tests) {
             O res = test.run();
             boolean pass = test.expect().equals(res);
-            if (!pass) {
-                success = false;
+            if (pass) {
+                nbSuccess++;
             }
             System.out.printf(
                     "%s for (%s) = %s expected %s\n",
@@ -31,10 +29,11 @@ public class TestRunner {
             );
         }
 
-        if (success) {
-            System.out.println("\n\uD83D\uDC4D\n");
-        } else {
-            System.out.println("\n\uD83D\uDC4E\n");
-        }
+        System.out.printf(
+                "\n\n => (%d/%d) %s\n",
+                nbSuccess,
+                tests.length,
+                nbSuccess == tests.length ? "\uD83D\uDC4D" : "\uD83D\uDC4E"
+        );
     }
 }
