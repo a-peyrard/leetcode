@@ -1,5 +1,8 @@
 package util;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class TestRunner {
     public static TestRunner basic() {
         return new TestRunner();
@@ -16,7 +19,7 @@ public class TestRunner {
         int nbSuccess = 0;
         for (RunnableTest<O> test : tests) {
             O res = test.run();
-            boolean pass = test.expect().equals(res);
+            boolean pass = assertEquals(test.expect(), res);
             if (pass) {
                 nbSuccess++;
             }
@@ -24,8 +27,8 @@ public class TestRunner {
                     "%s for (%s) = %s expected %s\n",
                     pass ? "✨" : "\uD83D\uDC80",
                     test.inputs(),
-                    res,
-                    test.expect()
+                    print(res),
+                    print(test.expect())
             );
         }
 
@@ -35,5 +38,20 @@ public class TestRunner {
                 tests.length,
                 nbSuccess == tests.length ? "\uD83D\uDC4D" : "\uD83D\uDC4E"
         );
+    }
+
+    private boolean assertEquals(Object a, Object b) {
+        if (a instanceof int[] && b instanceof int[]) {
+            return Arrays.equals((int[]) a, (int[]) b);
+        }
+        return a.equals(b);
+    }
+
+    private String print(Object o) {
+        if (o instanceof int[]) {
+            return Arrays.toString((int[]) o);
+        }
+
+        return String.valueOf(o);
     }
 }
