@@ -1,0 +1,6 @@
+pytest==3.2.2
+pep8==1.7.0
+pylint==1.7.2
+
+# avoid problem https://github.com/awslabs/aws-sam-cli/pull/795
+astroid==2.1.0
