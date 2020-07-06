@@ -14,9 +14,10 @@
         - Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−231,  231 − 1]. If the numerical value is out of the range of representable values, INT_MAX (231 − 1) or INT_MIN (−231) is returned.
 
  */
-package medium;
+package org.teutinc.leetCode.medium;
 
-import util.TestRunner;
+
+import org.teutinc.leetCode.util.TestRunner;
 
 public class StringToInteger {
     private static int myAtoi(String str) {

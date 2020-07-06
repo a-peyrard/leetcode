@@ -1,6 +1,5 @@
-package util;
+package org.teutinc.leetCode.util;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class TestRunner {

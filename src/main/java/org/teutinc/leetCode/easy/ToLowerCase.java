@@ -1,10 +1,6 @@
-package easy;
+package org.teutinc.leetCode.easy;
 
-import util.TestRunner;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import org.teutinc.leetCode.util.TestRunner;
 
 /*
     Implement function ToLowerCase() that has a string parameter str,

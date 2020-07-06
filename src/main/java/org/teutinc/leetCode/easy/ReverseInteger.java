@@ -1,6 +1,6 @@
-package easy;
+package org.teutinc.leetCode.easy;
 
-import util.TestRunner;
+import org.teutinc.leetCode.util.TestRunner;
 
 public class ReverseInteger {
 

@@ -1,4 +1,4 @@
-package hard;
+package org.teutinc.leetCode.hard;
 
 /*
     Validate if a given string can be interpreted as a decimal number.
@@ -29,9 +29,9 @@ package hard;
     Of course, the context of these characters also matters in the input.
  */
 
-import util.TestRunner;
 
-import java.util.List;
+import org.teutinc.leetCode.util.TestRunner;
+
 import java.util.regex.Pattern;
 
 public class ValidNumber {
